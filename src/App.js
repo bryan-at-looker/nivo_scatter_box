@@ -61,46 +61,51 @@ export const App = ({
       .y(d => yScale(crosshair.y))
     return <path d={lineGenerator(box)} strokeWidth={crosshair_stroke_width} stroke={crosshair_fill || "rgba(255, 0, 0, .25)"} />;
   };
+  if (data.length) {
+    return (
+      <ScatterPlot
+        width={width}
+        height={height}
+        data={[{id: 'a', data}]}
+        animate={false}
+        yScale={{
+          type: "linear",
+          min: box[0][1],
+          max: box[1][1]
+        }}
+        axisLeft={localeFormatPercent}
+        axisBottom={localeFormatPercent}
+        xScale={{
+          type: "linear",
+          min: box[0][0],
+          max: box[1][0]
+        }}
+        margin={{
+          top: margin,
+          right: margin,
+          bottom: margin,
+          left: margin
+        }}
+        colors={point_fill}
+        symbolSize={point_size}
+        renderNode={(props)=><CustomNode key={`${props.node.index}`} {...{...props, label_config}} />}
+        tooltip={(props)=><CustomTooltip {...{...props, field_labels}} />}
+        // enableGridX={false}
+        layers={[
+          "grid",
+          "axes",
+          BoxLayer,
+          "nodes",
+          "markers",
+          "mesh",
+          "legends",
+          CrosshairLayerX,
+          CrosshairLayerY
+        ]}
+      />
+    )
+  } else {
+    return <></>
+  }
   
-  return (
-    <ScatterPlot
-      width={width}
-      height={height}
-      data={[{id: '1', data}]}
-      yScale={{
-        type: "linear",
-        min: box[0][1],
-        max: box[1][1]
-      }}
-      axisLeft={localeFormatPercent}
-      axisBottom={localeFormatPercent}
-      xScale={{
-        type: "linear",
-        min: box[0][0],
-        max: box[1][0]
-      }}
-      margin={{
-        top: margin,
-        right: margin,
-        bottom: margin,
-        left: margin
-      }}
-      colors={point_fill}
-      symbolSize={point_size}
-      renderNode={(props)=><CustomNode {...{...props, label_config}} />}
-      tooltip={(props)=><CustomTooltip {...{...props, field_labels}} />}
-      // enableGridX={false}
-      layers={[
-        "grid",
-        "axes",
-        BoxLayer,
-        "nodes",
-        "markers",
-        "mesh",
-        "legends",
-        CrosshairLayerX,
-        CrosshairLayerY
-      ]}
-    />
-  )
 }
