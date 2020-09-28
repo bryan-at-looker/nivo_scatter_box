@@ -25,7 +25,8 @@ export const App = ({
     width,
     label_config,
     field_labels,
-    margin
+    margin,
+    axis_labels
   }) => {
 
   const data = labels.map((row,i)=>{
@@ -73,8 +74,19 @@ export const App = ({
           min: box[0][1],
           max: box[1][1]
         }}
-        axisLeft={localeFormatPercent}
-        axisBottom={localeFormatPercent}
+        axisLeft={{
+          ...localeFormatPercent,
+          legend: axis_labels.y,
+          legendPosition: 'middle',
+          legendOffset: -60,
+          
+        }}
+        axisBottom={{
+          ...localeFormatPercent,
+          legend: axis_labels.x,
+          legendPosition: 'middle',
+          legendOffset: 40  
+        }}
         xScale={{
           type: "linear",
           min: box[0][0],
@@ -84,7 +96,7 @@ export const App = ({
           top: margin,
           right: margin,
           bottom: margin,
-          left: margin
+          left: margin+20,
         }}
         colors={point_fill}
         symbolSize={point_size}

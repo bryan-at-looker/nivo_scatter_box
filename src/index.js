@@ -55,7 +55,7 @@ looker.plugins.visualizations.add({
       return;
     }
 
-    const {x_min, x_max, y_min, y_max, box_x_min, box_x_max, box_y_min, box_y_max, box_fill, point_fill, crosshair_fill, crosshair_stroke_width, point_size, margin } = config
+    const {x_min, x_max, y_min, y_max, box_x_min, box_x_max, box_y_min, box_y_max, box_fill, point_fill, crosshair_fill, crosshair_stroke_width, point_size, margin, x_label, y_label } = config
     const box_outline = [
       {
         x: handleOverride(box_x_min) || 0, 
@@ -109,12 +109,17 @@ looker.plugins.visualizations.add({
       ]
     ]
 
+    const axis_labels = {
+      x: x_label || queryResponse.fields.measure_like[0].label_short || queryResponse.fields.measure_like[0].label || '',
+      y: y_label || queryResponse.fields.measure_like[1].label_short || queryResponse.fields.measure_like[1].label || '',
+    }
+
     // Finally update the state with our new data
     this.chart = ReactDOM.render(
       <ComponentsProvider>
       <App 
         // {...{data, element, config, queryResponse, details, done}}
-        {...{measureX, measureY, labels, box, rendered, names, box_outline, box_fill, point_fill, crosshair, crosshair_fill, crosshair_stroke_width, point_size, label_config, field_labels, margin}}
+        {...{measureX, measureY, labels, box, rendered, names, box_outline, box_fill, point_fill, crosshair, crosshair_fill, crosshair_stroke_width, point_size, label_config, field_labels, margin, axis_labels}}
         height={element.offsetHeight}
         width={element.offsetWidth}
       />

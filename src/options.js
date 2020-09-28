@@ -31,6 +31,20 @@ export const options = {
     order: 4,
     display_size: "half"
   },
+  x_label: {
+    section: "Axes",
+    type: "string",
+    label: "X Axis Label",
+    display: "text",
+    order: 5
+  },
+  y_label: {
+    section: "Axes",
+    type: "string",
+    label: "X Axis Label",
+    display: "text",
+    order: 6
+  },
   box_x_min: {
     section: "Box",
     type: "string",
